@@ -32,6 +32,7 @@ class Snake
     end
   end
 
+  # Finds former location and deletes the snake. Spawns snake to new location.
   def move(board)
     form_loc = board.layout.index {|tile| tile.content == self}
     board.layout[form_loc].revert_content
