@@ -1,8 +1,11 @@
 require_relative 'board'
 require_relative 'tile'
+require_relative 'rng_spawner'
 
 # A collection of methods to form and move the snake.
 class Snake
+  include RNG_Spawner
+
   attr_accessor :direction, :alive, :current_location_index, :head_display, :input
 
   def initialize
@@ -45,17 +48,5 @@ class Snake
 
   def alive?
     return @alive
-  end
-
-  private
-
-  # Generates a random index within the borders of the "grid".
-  def index_generator
-    location = rand(19..303)
-    while location % 19 == 0 || location % 19 == 18
-      location = rand(19..303)
-    end
-    location
-  end
-    
+  end    
 end
