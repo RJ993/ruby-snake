@@ -1,4 +1,4 @@
-require_relative 'rng_spawner'
+require_relative '../snake_tech/rng_spawner'
 
 # Object used to represent food.
 class Food

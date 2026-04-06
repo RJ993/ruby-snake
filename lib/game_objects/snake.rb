@@ -1,6 +1,6 @@
 require_relative 'board'
 require_relative 'tile'
-require_relative 'rng_spawner'
+require_relative '../snake_tech/rng_spawner'
 
 # A collection of methods to form and move the snake.
 class Snake

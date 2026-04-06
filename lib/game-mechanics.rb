@@ -1,7 +1,7 @@
-require_relative 'snake'
-require_relative 'board'
-require_relative 'tile'
-require_relative 'advanced_controls'
+require_relative 'game_objects/snake'
+require_relative 'game_objects/board'
+require_relative 'game_objects/tile'
+require_relative 'snake_tech/advanced_controls'
 
 # Collection of methods needed to have the game running.
 class Game
