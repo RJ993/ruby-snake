@@ -16,6 +16,7 @@ module Advanced_Controls
 
   def fluid_board
     Gem.win_platform? ? (system "cls") : (system "clear")
+    puts "Press the WASD or arrow keys to move. To quit, press Ctrl + C\n "
     puts @board
   end
 

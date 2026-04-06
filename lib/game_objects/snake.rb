@@ -6,10 +6,9 @@ require_relative '../snake_tech/rng_spawner'
 class Snake
   include RNG_Spawner
 
-  attr_accessor :direction, :alive, :current_location_index, :head_display, :input, :won
+  attr_accessor :alive, :current_location_index, :head_display, :input, :won
 
   def initialize
-    @name = "Demo Dummy"
     @head_display = "##D"
     @input = 'a'
     @alive = true
