@@ -6,7 +6,7 @@ require_relative '../snake_tech/rng_spawner'
 class Snake
   include RNG_Spawner
 
-  attr_accessor :direction, :alive, :current_location_index, :head_display, :input
+  attr_accessor :direction, :alive, :current_location_index, :head_display, :input, :won
 
   def initialize
     @name = "Demo Dummy"
@@ -14,6 +14,7 @@ class Snake
     @input = 'a'
     @alive = true
     @current_location_index = index_generator
+    @won = false
   end
 
   # Shifts the index to move a certain direction.
@@ -44,6 +45,14 @@ class Snake
 
   def dies?(new_location)
      @alive = false if new_location.content_display.include?("*")
+  end
+
+  def wins?(board)
+    @won = true if board.layout.none? {|tile| tile.content_display == "   "}
+  end
+
+  def won?
+    return @won
   end
 
   def alive?
