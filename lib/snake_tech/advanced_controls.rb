@@ -6,7 +6,7 @@ module Advanced_Controls
   # Receives and returns inputs. Looks for terminal and non wasd input.
   def input_receiver
     if $stdin.tty?
-      new_direction = advanced_getch
+      new_direction = advanced_getch(2)
     else
       no_terminal_error
     end
@@ -51,19 +51,20 @@ module Advanced_Controls
   # Sends out error message and kills the snake to exit the program.
   def no_terminal_error
     puts "ERROR: If using rdbg debugger, please connect it to a terminal using \"\"useTerminal\": true\". If not... consult Ruby docs."
-    @snake.alive = false
+    @snake.alive = false if self == Game
   end
 
   # Allows getch to be timed out and for game to be exited gracefully.
-  def advanced_getch
-    new_direction = nil
-    $stdin.timeout = 2
+  def advanced_getch(timeout = nil, message = false)
+    input = nil
+    $stdin.timeout = timeout
       begin
-        new_direction = $stdin.getch.tap { |char| abort("Game exited successfully") if char == "\u0003" || char == "\u0018" }
+        input = $stdin.getch.tap { |char| abort("Game exited successfully.") if char == "\u0003" || char == "\u0018" }
       rescue IO::TimeoutError
+       puts "No input, game exited successfully." if message == true
       ensure
         $stdin.timeout = nil
       end
-    new_direction
+    input
   end
 end

@@ -1,5 +1,3 @@
-require_relative "lib/game-mechanics"
+require_relative "lib/intro"
 
-game = Game.new
-
-game.play
+Introduction.new
