@@ -21,16 +21,17 @@ class Game
       fluid_board
       new_direction = input_receiver
       @snake.new_location?(new_direction)
-      @snake.wins?(@board)
       @snake.dies?(@board.layout[@snake.current_location_index])
-      break if @snake.alive? == false || @snake.won? == true
+      break if @snake.alive? == false
       objects_respawn
+      @snake.wins?(@board)
     end
+    win_or_lose_declarations
   end
 
   def objects_spawn
     @board.layout[@snake.current_location_index].change_content(@snake, @snake.head_display)
-    @food.spawn_gen(@board)
+    @food.spawn_gen(@board) if @board.layout.none? {|tile| tile.content_display == "   "} == false
     @board.layout[@food.current_location_index].change_content(@food, @food.display)
   end
 
@@ -40,5 +41,10 @@ class Game
       @food.spawn_gen(@board)
       @board.layout[@food.current_location_index].change_content(@food, @food.display)
     end
+  end
+
+  def win_or_lose_declarations
+    puts "GAME OVER" if @snake.alive? == false
+    puts "You win!" if @snake.won? == true
   end
 end
