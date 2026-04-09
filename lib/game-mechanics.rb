@@ -16,7 +16,7 @@ class Game
 
   # Spawns snake. While the snake is alive, an input is received, checked, and the snake moves if not determined dead.
   def play
-    objects_spawn
+    initial_spawn
     until @snake.alive? == false || @snake.won? == true
       fluid_board
       new_direction = input_receiver
