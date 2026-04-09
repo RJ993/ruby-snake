@@ -13,6 +13,7 @@ class Food
     @display = " O "
   end
 
+  # Generates a spawn index for the food. Assures that it does spawn on blank tiles.
   def spawn_gen(board)
     if board.layout[@current_location_index].content_display != "   "
       until board.layout[@current_location_index].content_display == "   "
@@ -21,6 +22,7 @@ class Food
     end
   end
 
+  # Spawns the food in provided that there aren't any already.
   def spawn_in(board)
     if board.layout.none? {|tile| tile.content_display.include?("O") }
       self.spawn_gen(board) if board.layout.none? {|tile| tile.content_display == "   "} == false

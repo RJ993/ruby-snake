@@ -29,11 +29,13 @@ class Game
     win_or_lose_declarations
   end
 
+  # Handles the first spawns of the game
   def initial_spawn
     @board.layout[@snake.current_location_index].change_content(@snake, @snake.head_display)
     @food.spawn_in(@board)
   end
 
+  # Handles snake movement and food respawns.
   def objects_respawn
     @snake.move(@board)
     @food.spawn_in(@board)
