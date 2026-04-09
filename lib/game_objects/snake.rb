@@ -39,7 +39,7 @@ class Snake
   def move(board)
     form_loc = board.layout.index {|tile| tile.content == self}
     board.layout[form_loc].revert_content
-    board.layout[@current_location_index].change_content(self, self.head_display)
+    board.layout[@current_location_index].change_content(self, @head_display)
   end
 
   def dies?(new_location)

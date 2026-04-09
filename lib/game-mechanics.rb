@@ -29,18 +29,14 @@ class Game
     win_or_lose_declarations
   end
 
-  def objects_spawn
+  def initial_spawn
     @board.layout[@snake.current_location_index].change_content(@snake, @snake.head_display)
-    @food.spawn_gen(@board) if @board.layout.none? {|tile| tile.content_display == "   "} == false
-    @board.layout[@food.current_location_index].change_content(@food, @food.display)
+    @food.spawn_in(@board)
   end
 
   def objects_respawn
     @snake.move(@board)
-    if @board.layout.none? {|tile| tile.content_display.include?("O") }
-      @food.spawn_gen(@board)
-      @board.layout[@food.current_location_index].change_content(@food, @food.display)
-    end
+    @food.spawn_in(@board)
   end
 
   def win_or_lose_declarations

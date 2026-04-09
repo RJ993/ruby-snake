@@ -14,10 +14,17 @@ class Food
   end
 
   def spawn_gen(board)
-    if board.layout[self.current_location_index].content_display != "   "
-      until board.layout[self.current_location_index].content_display == "   "
+    if board.layout[@current_location_index].content_display != "   "
+      until board.layout[@current_location_index].content_display == "   "
         @current_location_index = index_generator
       end
+    end
+  end
+
+  def spawn_in(board)
+    if board.layout.none? {|tile| tile.content_display.include?("O") }
+      self.spawn_gen(board) if board.layout.none? {|tile| tile.content_display == "   "} == false
+      board.layout[@current_location_index].change_content(self, @display)
     end
   end
 end
