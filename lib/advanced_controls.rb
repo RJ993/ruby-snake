@@ -7,7 +7,7 @@ module Advanced_Controls
   # Receives and returns inputs. Looks for terminal and non wasd input.
   def input_receiver
     if $stdin.tty?
-      new_direction = advanced_getch(2)
+      new_direction = advanced_getch(0.2)
     else
       no_terminal_error
     end
