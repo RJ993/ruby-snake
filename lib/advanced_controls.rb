@@ -10,7 +10,7 @@ module Advanced_Controls
     else
       no_terminal_error
     end
-    new_direction = input_cleaner(new_direction) if new_direction != %w[w a s d]
+    new_direction = input_cleaner(new_direction) if %w[w a s d].include?(new_direction) == false
     return new_direction
   end
 
