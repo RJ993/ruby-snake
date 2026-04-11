@@ -33,6 +33,7 @@ class Game
     @food.spawn_in(@board)
   end
 
+  # Manages every snake parts location/
   def snake_management(new_direction)
     @snake.slither
     @snake.head.new_location?(new_direction)
@@ -40,6 +41,7 @@ class Game
     refresh_snake if @board.layout.none? {|tile| tile.content_display.include?("O") }
   end
 
+  # Grows the snake and reflects that growth.
   def refresh_snake
     @snake.grow
     @snake.move(@board)
