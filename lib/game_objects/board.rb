@@ -1,4 +1,4 @@
-require_relative "tile"
+require_relative 'tile'
 
 # Where the game takes place.
 class Board
@@ -9,32 +9,31 @@ class Board
   end
 
   def to_s
-    board_string=""
-      layout.each_with_index do |tile, index|
-      if (index + 1) % 19 == 0
-        board_string += "#{tile}\n"
-      else
-        board_string += "#{tile}"
-      end
+    board_string = ''
+    layout.each_with_index do |tile, index|
+      board_string += if (index + 1) % 19 == 0
+                        "#{tile}\n"
+                      else
+                        "#{tile}"
+                      end
     end
     board_string
   end
-
 
   private
 
   # Creates a 17 by 19 (15 by 17 with some "walls") grid.
   def board_creator
     board_array = []
-      19.times {board_array.push(Tile.new("*  "))}
-      15.times do
-        board_array.push(Tile.new("*  "))
-        17.times do
-        board_array.push(Tile.new("   "))
-        end
-        board_array.push(Tile.new("*"))
+    19.times { board_array.push(Tile.new('*  ')) }
+    15.times do
+      board_array.push(Tile.new('*  '))
+      17.times do
+        board_array.push(Tile.new('   '))
       end
-      19.times {board_array.push(Tile.new("*  "))}
+      board_array.push(Tile.new('*'))
+    end
+    19.times { board_array.push(Tile.new('*  ')) }
     board_array
   end
 end

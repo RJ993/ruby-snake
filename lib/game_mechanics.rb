@@ -6,7 +6,7 @@ require_relative 'advanced_controls'
 
 # Collection of methods needed to have the game running.
 class Game
-  include Advanced_Controls
+  include AdvancedControls
 
   def initialize
     @snake = Snake.new
@@ -29,7 +29,7 @@ class Game
 
   # Handles snake movement and food spawns.
   def objects_spawn
-    @snake.move(@board) if @board.layout.none? {|tile| tile.content == @snake.head}
+    @snake.move(@board) if @board.layout.none? { |tile| tile.content == @snake.head }
     @food.spawn_in(@board)
   end
 
@@ -38,7 +38,7 @@ class Game
     @snake.slither
     @snake.head.new_location?(new_direction)
     @snake.move(@board)
-    refresh_snake if @board.layout.none? {|tile| tile.content_display.include?("O") }
+    refresh_snake if @board.layout.none? { |tile| tile.content_display.include?('O') }
   end
 
   # Grows the snake and reflects that growth.
@@ -48,7 +48,7 @@ class Game
   end
 
   def win_or_lose_declarations
-    puts "GAME OVER" if @snake.alive? == false
-    puts "You win!" if @snake.won? == true
+    puts 'GAME OVER' if @snake.alive? == false
+    puts 'You win!' if @snake.won? == true
   end
 end

@@ -1,3 +1,3 @@
-require_relative "lib/intro"
+require_relative 'lib/intro'
 
 Introduction.new

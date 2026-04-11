@@ -1,7 +1,7 @@
 require 'io/console'
 
 # An assortment of methods used to give the game more advanced controls then just usings "gets" and enter.
-module Advanced_Controls
+module AdvancedControls
   private
 
   # Receives and returns inputs. Looks for terminal and non wasd input.
@@ -12,11 +12,11 @@ module Advanced_Controls
       no_terminal_error
     end
     new_direction = input_cleaner(new_direction) if %w[w a s d].include?(new_direction) == false
-    return new_direction
+    new_direction
   end
 
   def fluid_board
-    Gem.win_platform? ? (system "cls") : (system "clear")
+    Gem.win_platform? ? (system 'cls') : (system 'clear')
     puts "Press the WASD or arrow keys to move. To quit, press Ctrl + C\n "
     puts @board
   end
@@ -37,21 +37,21 @@ module Advanced_Controls
   # Translates arrow-keys to wasd.
   def arrow_key_translator(char)
     case char
-      when "\e[A"
-        char = 'w'
-      when "\e[D"
-        char = 'a'
-      when "\e[B"
-        char = 's'
-      when "\e[C"
-        char = 'd'
-    end 
+    when "\e[A"
+      char = 'w'
+    when "\e[D"
+      char = 'a'
+    when "\e[B"
+      char = 's'
+    when "\e[C"
+      char = 'd'
+    end
     char
   end
 
   # Sends out error message and kills the snake to exit the program.
   def no_terminal_error
-    puts "ERROR: If using rdbg debugger, please connect it to a terminal using \"\"useTerminal\": true\". If not... consult Ruby docs."
+    puts 'ERROR: If using rdbg debugger, please connect it to a terminal using ""useTerminal": true". If not... consult Ruby docs.'
     @snake.alive = false if self == Game
   end
 
@@ -59,13 +59,13 @@ module Advanced_Controls
   def advanced_getch(timeout = nil, message = false)
     input = nil
     $stdin.timeout = timeout
-      begin
-        input = $stdin.getch.tap { |char| abort("Game exited successfully.") if char == "\u0003" || char == "\u0018" }
-      rescue IO::TimeoutError
-       puts "No input, game exited successfully." if message == true
-      ensure
-        $stdin.timeout = nil
-      end
+    begin
+      input = $stdin.getch.tap { |char| abort('Game exited successfully.') if ["\u0003", "\u0018"].include?(char) }
+    rescue IO::TimeoutError
+      puts 'No input, game exited successfully.' if message == true
+    ensure
+      $stdin.timeout = nil
+    end
     input
   end
 end

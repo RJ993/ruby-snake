@@ -18,6 +18,6 @@ class Tile
 
   def revert_content
     @content = nil
-    @content_display = "   "
+    @content_display = '   '
   end
 end

@@ -7,34 +7,30 @@ class Food
 
   def initialize
     @current_location_index = 166
-    @display = " O "
+    @display = ' O '
   end
 
   # Spawns the food in provided that there aren't any already.
   def spawn_in(board)
-    if board.layout.none? {|tile| tile.content_display.include?("O") }
-      self.spawn_gen(board) if board.layout.none? {|tile| tile.content_display == "   "} == false
-      board.layout[@current_location_index].change_content(self, @display)
-    end
+    return unless board.layout.none? { |tile| tile.content_display.include?('O') }
+
+    spawn_gen(board) if board.layout.none? { |tile| tile.content_display == '   ' } == false
+    board.layout[@current_location_index].change_content(self, @display)
   end
 
   private
 
   # Generates a spawn index for the food. Assures that it does spawn on blank tiles.
   def spawn_gen(board)
-    if board.layout[@current_location_index].content_display != "   "
-      until board.layout[@current_location_index].content_display == "   "
-        @current_location_index = index_generator
-      end
-    end
+    return unless board.layout[@current_location_index].content_display != '   '
+
+    @current_location_index = index_generator until board.layout[@current_location_index].content_display == '   '
   end
 
   # Generates a random index within the borders of the "grid".
   def index_generator
     location = rand(19..303)
-    while location % 19 == 0 || location % 19 == 18
-      location = rand(19..303)
-    end
+    location = rand(19..303) while [0, 18].include?(location % 19)
     location
   end
 end
