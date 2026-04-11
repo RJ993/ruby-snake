@@ -1,5 +1,5 @@
 require_relative 'game-mechanics'
-require_relative 'snake_tech/advanced_controls'
+require_relative 'advanced_controls'
 
 class Introduction
   include Advanced_Controls

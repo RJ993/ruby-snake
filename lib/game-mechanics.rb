@@ -2,7 +2,7 @@ require_relative 'game_objects/snake'
 require_relative 'game_objects/board'
 require_relative 'game_objects/tile'
 require_relative 'game_objects/food'
-require_relative 'snake_tech/advanced_controls'
+require_relative 'advanced_controls'
 
 # Collection of methods needed to have the game running.
 class Game
@@ -16,29 +16,33 @@ class Game
 
   # Spawns snake. While the snake is alive, an input is received, checked, and the snake moves if not determined dead.
   def play
-    initial_spawn
+    objects_spawn
     until @snake.alive? == false || @snake.won? == true
       fluid_board
       new_direction = input_receiver
-      @snake.new_location?(new_direction)
-      @snake.dies?(@board.layout[@snake.current_location_index])
-      break if @snake.alive? == false
-      objects_respawn
-      @snake.wins?(@board)
+      snake_management(new_direction)
+      objects_spawn
+      @snake.wins?(@board) if @snake.alive? == true
     end
     win_or_lose_declarations
   end
 
-  # Handles the first spawns of the game
-  def initial_spawn
-    @board.layout[@snake.current_location_index].change_content(@snake, @snake.head_display)
+  # Handles snake movement and food spawns.
+  def objects_spawn
+    @snake.move(@board) if @board.layout.none? {|tile| tile.content == @snake.head}
     @food.spawn_in(@board)
   end
 
-  # Handles snake movement and food respawns.
-  def objects_respawn
+  def snake_management(new_direction)
+    @snake.slither
+    @snake.head.new_location?(new_direction)
     @snake.move(@board)
-    @food.spawn_in(@board)
+    refresh_snake if @board.layout.none? {|tile| tile.content_display.include?("O") }
+  end
+
+  def refresh_snake
+    @snake.grow
+    @snake.move(@board)
   end
 
   def win_or_lose_declarations

@@ -1,53 +1,29 @@
 require_relative 'board'
 require_relative 'tile'
-require_relative '../snake_tech/rng_spawner'
+require_relative 'snake_parts/snake_head'
+require_relative 'snake_parts/snake_part'
 
-# A collection of methods to form and move the snake.
+# A linked list structure used to represent a snake.
 class Snake
-  include RNG_Spawner
-
-  attr_accessor :alive, :current_location_index, :head_display, :input, :won
+  attr_accessor :alive, :won, :head
 
   def initialize
-    @head_display = "##D"
-    @input = 'a'
+    @head = Snake_Head.new
     @alive = true
-    @current_location_index = index_generator
     @won = false
-  end
-
-  # Shifts the index to move a certain direction.
-  def new_location?(input)
-    if input.nil?
-      input = @input
-    else
-      @input = input
+    3.times do
+      grow
+      slither
+      @head.current_location_index += 1
     end
-    case @input
-    when 'w'
-      @current_location_index -= 19
-    when 'a'
-      @current_location_index -= 1
-    when 's'
-      @current_location_index += 19
-    when 'd'
-      @current_location_index += 1
-    end
-  end
-
-  # Finds former location and deletes the snake. Spawns snake to new location.
-  def move(board)
-    form_loc = board.layout.index {|tile| tile.content == self}
-    board.layout[form_loc].revert_content
-    board.layout[@current_location_index].change_content(self, @head_display)
   end
 
   def dies?(new_location)
-     @alive = false if new_location.content_display.include?("*")
+     @alive = false if new_location.content_display.include?("*") || new_location.content_display.include?("#")
   end
 
   def wins?(board)
-    @won = true if board.layout.none? {|tile| tile.content_display == "   "}
+    @won = true if board.layout.none? {|tile| tile.content_display == "   "} && board.layout.none? {|tile| tile.content_display == " O "}
   end
 
   def won?
@@ -56,5 +32,39 @@ class Snake
 
   def alive?
     return @alive
-  end    
+  end
+
+  # Uses recursion to find the last part of the snake and add another part onto it.
+  def grow(part = @head)
+    return if part == nil
+    if part.next_part != nil
+      grow(part.next_part)
+    else
+      part.next_part = Snake_Part.new
+    end
+  end
+
+  # Uses recursion to push indexes to the next parts.
+  def slither(part = @head)
+    return if part == nil
+    part.former_location_index = part.current_location_index
+    if part.next_part != nil
+      slither(part.next_part)
+      part.next_part.current_location_index = part.current_location_index
+    end
+  end
+
+  # Shifts snake parts to the index of the part in front of it using recursion.
+  def move(board, part = @head)
+    return if part == nil
+    if part.next_part != nil
+      part.next_part.current_location_index = part.former_location_index if part.next_part.current_location_index == nil
+      move(board, part.next_part)
+    else
+      form_loc = board.layout.index {|tile| tile.content == part}
+      board.layout[form_loc].revert_content if form_loc != nil
+    end
+    dies?(board.layout[@head.current_location_index]) if part == @head
+    board.layout[part.current_location_index].change_content(part, part.display) 
+  end
 end
