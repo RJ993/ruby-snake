@@ -1,5 +1,6 @@
 require 'io/console'
 
+# An assortment of methods used to give the game more advanced controls then just usings "gets" and enter.
 module Advanced_Controls
   private
 
