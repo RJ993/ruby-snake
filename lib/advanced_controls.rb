@@ -2,7 +2,7 @@ require 'io/console'
 
 # An assortment of methods used to give the game more advanced controls then just usings "gets" and enter.
 module AdvancedControls
-  private
+  protected
 
   # Receives and returns inputs. Looks for terminal and non wasd input.
   def input_receiver
@@ -14,6 +14,8 @@ module AdvancedControls
     new_direction = input_cleaner(new_direction) if %w[w a s d].include?(new_direction) == false
     new_direction
   end
+
+  private
 
   def fluid_board
     Gem.win_platform? ? (system 'cls') : (system 'clear')

@@ -6,6 +6,8 @@ require_relative 'advanced_controls'
 
 # Collection of methods needed to have the game running.
 class Game
+  attr_accessor :snake
+
   include AdvancedControls
 
   def initialize
@@ -33,7 +35,7 @@ class Game
     @food.spawn_in(@board)
   end
 
-  # Manages every snake parts location/
+  # Manages every snake parts location.
   def snake_management(new_direction)
     @snake.slither
     @snake.head.new_location?(new_direction)
