@@ -2,8 +2,6 @@ require 'io/console'
 
 # An assortment of methods used to give the game more advanced controls then just usings "gets" and enter.
 module AdvancedControls
-  protected
-
   # Receives and returns inputs. Looks for terminal and non wasd input.
   def input_receiver
     if $stdin.tty?
